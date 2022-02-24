@@ -1,27 +1,14 @@
 from django.shortcuts import render
 
-from utils import get_db_handle, get_collection_handle, filteringTheProjects
+from utils import filteringTheProjects
 
 import re
-import os
-
-
-HOST_NAME = os.environ['HOST_NAME']
-PORT = os.environ['PORT']
-DATABASE_NAME = os.environ['DATABASE_NAME']
-COLLECTION_NAME = os.environ['COLLECTION_NAME']
-
-try:
-    db_handle, mongo_client = get_db_handle(DATABASE_NAME,HOST_NAME,PORT)
-    collection_handle = get_collection_handle(db_handle,COLLECTION_NAME)
-except Exception as e:
-    raise ("Not able to retrive the database properties.",e)
 
 
 def home(request):
         """ This is home view where it returns html code of search box """
 
-        municipalities = ['Richmond Hill','Missisuaga','Winnipeg','Niagara Falls','Vaughan','All Municipalities']
+        municipalities = ['Richmond Hill','Missisuaga','Winnipeg','Niagara Falls','All Municipalities']
                                                                     
         return render(request,'searching/home.html',{'municipalities':municipalities})
 
@@ -40,11 +27,8 @@ def searchResults(request):
         raise ("Error recieving in query or municipality name from post.",e)
 
     municipality_name = municipality_name.replace(" ", "").lower()
-    print(municipality_name)
 
-    all_projects = list(collection_handle.find())
-
-    projects = filteringTheProjects(query,municipality_name,all_projects)
+    projects = filteringTheProjects(query,municipality_name)
     context ={
                 'projects':projects,
                 'query':query,

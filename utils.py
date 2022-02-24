@@ -18,40 +18,50 @@ import os
 
 import gensim
 
+HOST_NAME = os.environ['HOST_NAME']
+PORT = os.environ['PORT']
+DATABASE_NAME = os.environ['DATABASE_NAME']
+COLLECTION_NAME = os.environ['COLLECTION_NAME']
+
 #https://www.analyticsvidhya.com/blog/2021/06/how-to-connect-mongodb-database-with-django/
-def get_db_handle(db_name, host, port):
+def get_db_handle(host, port,db_name,collection_name):
     """To use Mongodb client """
+    try:
 
-    client = MongoClient(host,port=int(port))
-    db_handle = client[db_name]
+        client = MongoClient(host,port=int(port))
+        db_handle = client[db_name]
+        collection_handle = db_handle[collection_name]
     
-    return db_handle, client
+    except Exception as e:
+        raise ("Not able to retrive the database properties.",e)
+    
+    return collection_handle
 
 
-def get_collection_handle(db_handle,collection_name):
-    """ Returns the collection from database """
-    return db_handle[collection_name]
-
-
-
-def filteringTheProjects(query,municipality_name,all_projects):
+def filteringTheProjects(query,municipality_name):
     """ Filters the projects from database according to the muncipality name and accordint to search query """
     
-    docs = []
-    filteredProjects = []
+    collection_handle = get_db_handle(HOST_NAME, PORT,DATABASE_NAME,COLLECTION_NAME)
 
     if(municipality_name == 'allmunicipalities'):
-            for project in all_projects:
-                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words']
-                docs.append(doc)
-                filteredProjects.append(project)
+        all_projects = list(collection_handle.find())
+        docs,filteredProjects = appending_docs(all_projects)
 
-    else:
-        for project in all_projects:
-            if(municipality_name == project['municipality_name']):
-                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words']
-                docs.append(doc)
-                filteredProjects.append(project)
+    elif(municipality_name == 'richmondhill'):
+        projects = list(collection_handle.find({ "municipality_name": "richmondhill"}))
+        docs,filteredProjects = appending_docs(projects)
+
+    elif(municipality_name == 'missisuaga'):
+        projects = list(collection_handle.find({ "municipality_name": "missisuaga"}))
+        docs,filteredProjects = appending_docs(projects)
+
+    elif(municipality_name == 'winnipeg'):
+        projects = list(collection_handle.find({ "municipality_name": "winnipeg"}))
+        docs,filteredProjects = appending_docs(projects)
+
+    else: #niagarafalls
+        projects = list(collection_handle.find({ "municipality_name": "niagarafalls"}))
+        docs,filteredProjects = appending_docs(projects)
 
     if(len(docs)>0):
         sim_array = findingtfid(docs,query)
@@ -61,6 +71,19 @@ def filteringTheProjects(query,municipality_name,all_projects):
         new_projects=[]
 
     return new_projects
+
+def appending_docs(projects):
+    """appending text,matched words and topics  """
+    docs = []
+    filteredProjects = []
+
+    for project in projects:
+                doc = project['topics'] + project['matched_words'] + project['topics'] + project['text']
+                docs.append(doc)
+                filteredProjects.append(project)
+    
+    return docs,filteredProjects
+
     
 def findingtfid(docs,query):
     """ Returns the tfid matrix with query and documents returned from the database. This does the preprocessing of query and documents"""
