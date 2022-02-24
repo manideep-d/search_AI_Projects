@@ -21,7 +21,8 @@ except Exception as e:
 def home(request):
         """ This is home view where it returns html code of search box """
 
-        municipalities = ['Richmond hill','Missisuaga','Winnipeg','Niagara falls','Vaughan','All Municipalities']
+        municipalities = ['Richmond Hill','Missisuaga','Winnipeg','Niagara Falls','Vaughan','All Municipalities']
+                                                                    
         return render(request,'searching/home.html',{'municipalities':municipalities})
 
 def about(request):
@@ -38,11 +39,12 @@ def searchResults(request):
     except Exception as e:
         raise ("Error recieving in query or municipality name from post.",e)
 
-    municipality_name = municipality_name.replace(" ", "")
+    municipality_name = municipality_name.replace(" ", "").lower()
+    print(municipality_name)
 
     all_projects = list(collection_handle.find())
 
-    projects = filteringTheProjects(query,municipality_name.lower(),all_projects)
+    projects = filteringTheProjects(query,municipality_name,all_projects)
     context ={
                 'projects':projects,
                 'query':query,
