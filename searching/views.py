@@ -38,7 +38,7 @@ def searchResults(request):
     except Exception as e:
         raise ("Error recieving in query or municipality name from post.",e)
 
-    municipality_name = re.sub('\s+','',municipality_name).lower()
+    municipality_name = municipality_name.replace(" ", "").lower()
 
     all_projects = list(collection_handle.find())
 
