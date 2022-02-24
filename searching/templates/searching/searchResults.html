@@ -1,0 +1,30 @@
+{% extends 'searching/base.html' %}
+{% block content %}
+    <h4 class="text"> Search Results for " {{query}} in {{municipality_name}} "</h4><br>
+    <div class="container">
+        <h2 class="text-center"><u></u></h2><br>
+        <table class="table table-fixed ">
+          <thead>
+            <tr>
+              <th>Municipality-Name</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- jinja2 Technique -->  
+          {% for project in projects %}
+            <tr>
+              <td>{{ project.municipality_name }}</td>
+              <td>
+              <a href= {{ project.links }}> 
+                {{ project.links }}
+              </a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</body>
+
+{% endblock %}

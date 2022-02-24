@@ -1,0 +1,53 @@
+.input-group{
+    padding-left: 380px;
+    margin-top: 100px;
+}
+.navbar{
+    margin-bottom : 50px;
+}
+
+.text{
+    text-align: center;
+}
+
+.about-text{
+    padding-left: 50px;
+}
+
+.table{
+    padding-bottom: 50px;
+}
+
+.table-fixed thead,
+.table-fixed thead>th {
+    background: #4d7275;
+    color: #fff;
+}
+
+.table-fixed tbody tr td {
+    background: #fff;
+}
+
+.table-fixed>thead>tr>th {
+    border: 0 !important;
+}
+
+.table-fixed>tbody>tr>td:last-child {
+    border-right: 0;
+}
+
+.table-fixed tbody td,
+.table-fixed thead>tr>th {
+    padding-left: 20px !important;
+}
+
+.table-fixed tbody {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.table-fixed tr {
+    display: block;
+}
+

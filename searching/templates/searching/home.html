@@ -1,0 +1,25 @@
+{% extends 'searching/base.html' %}
+{% block content %}
+
+
+
+        <div class="input-group mb-3" >
+            <div class="input-group-text p-0">
+                <form action="{% url 'search_results' %}" method="POST">
+                    {%csrf_token%}
+            </div>
+            <input class="col-md-4" type="search" name= "query" placeholder="Search for AI projects">
+            <div>
+                <select class="form-select shadow-none bg-light border-0" name="municipality_name">
+                    {% for city in municipalities %}
+                    <option class="dropdown-item">{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div class="container w-25">
+            <button type="submit" class="btn btn-outline-primary">search</button>
+            </button>
+        </div>
+
+
+{% endblock %}
+
