@@ -42,14 +42,14 @@ def filteringTheProjects(query,municipality_name,all_projects):
 
     if(municipality_name == 'allmunicipalities'):
             for project in all_projects:
-                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words'] + project['links'] + project['text']
+                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words']
                 docs.append(doc)
                 filteredProjects.append(project)
 
     else:
         for project in all_projects:
             if(municipality_name == project['municipality_name']):
-                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words'] + project['links'] + project['text']
+                doc = project['topics'] + project['matched_words'] + project['matched_words'] + project['matched_words']
                 docs.append(doc)
                 filteredProjects.append(project)
 
