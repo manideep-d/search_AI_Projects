@@ -51,8 +51,8 @@ def filteringTheProjects(query,municipality_name):
         projects = list(collection_handle.find({ "municipality_name": "richmondhill"}))
         docs,filteredProjects = appending_docs(projects)
 
-    elif(municipality_name == 'missisuaga'):
-        projects = list(collection_handle.find({ "municipality_name": "missisuaga"}))
+    elif(municipality_name == 'mississauga'):
+        projects = list(collection_handle.find({ "municipality_name": "mississauga"}))
         docs,filteredProjects = appending_docs(projects)
 
     elif(municipality_name == 'winnipeg'):
