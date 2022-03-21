@@ -6,7 +6,7 @@ The primary goal of this project is to develop a system that collects and displa
 
 System Architecture:-
 
-Whole diagram.png
+![Optional Text](../Whole diagram .png)
 
 
 This project is a UI application of "SMART CITY AI PROJECTS INFORMATION SYSTEM" which displays the information about AI projects in municipalities of North America.
