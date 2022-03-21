@@ -8,7 +8,7 @@ import re
 def home(request):
         """ This is home view where it returns html code of search box """
 
-        municipalities = ['Richmond Hill','Missisuaga','Winnipeg','Niagara Falls','All Municipalities']
+        municipalities = ['Richmond Hill','Mississuaga','Winnipeg','Niagara Falls','All Municipalities']
                                                                     
         return render(request,'searching/home.html',{'municipalities':municipalities})
 
